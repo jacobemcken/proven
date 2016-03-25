@@ -10,6 +10,8 @@ Add the following dependency to your project.clj file:
 
     [proven "0.1.0"]
 
+[![Clojars Project](https://img.shields.io/clojars/v/proven.svg)](https://clojars.org/proven)
+
 
 ## Usage
 
