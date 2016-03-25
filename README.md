@@ -4,6 +4,13 @@ Validation library inspired by jkk/verily but with better support for
 nested structures.
 
 
+## Installation
+
+Add the following dependency to your project.clj file:
+
+    [proven "0.1.0"]
+
+
 ## Usage
 
 ### The basics
