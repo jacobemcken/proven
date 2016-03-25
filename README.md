@@ -1,6 +1,6 @@
 # Proven
 
-Validation library inspired by jkk/verily but with better support for
+Validation library inspired by [jkk/verily][verily] but with better support for
 nested structures.
 
 
@@ -41,7 +41,7 @@ A very basic example to get started:
                   :msg "must not be blank"})
 ```
 
-The list of errors is the biggest difference from [jkk/verily][1] because
+The list of errors is the biggest difference from [jkk/verily][verily] because
 instead of referencing keys the `Err` record references a path (in a nested
 structure).
 
@@ -124,3 +124,6 @@ Copyright © 2016
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
+
+
+[verily]:https://github.com/jkk/verily
