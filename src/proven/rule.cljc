@@ -63,8 +63,8 @@ if the function f returns false."
   (make-validator keys #(or (nil? %) (blank-string? %))
                   (or msg "must not be blank")))
 
-(defn exact [val keys & [msg]]
-  (make-validator keys #(and (not= ::absent %) (not= val %))
+(defn exact [value keys & [msg]]
+  (make-validator keys #(and (not= ::absent %) (not= value %))
                   (or msg "incorrect value")))
 
 (defn matches [re keys & [msg]]
