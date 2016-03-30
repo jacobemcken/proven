@@ -25,9 +25,14 @@ manner. Ie.:
     (human-concat (map translate paths))))
 
 (defn error-strings
-  "Takes a list of errors and return a list of string describing the errors"
-  [errors]
-  (map (fn [err] (str (error-fields (:paths err) {}) " " (:msg err))) errors))
+  "Takes a list of errors and an optional translation map.
+The translation map is used to look up human readable versions of the path leafs
+(usually a keyword matching the form input field). Returns a list of strings
+describing the errors"
+  ([errors]
+   (error-strings {}))
+  ([errors translations]
+   (map (fn [err] (str (error-fields (:paths err) translations) " " (:msg err))) errors)))
 
 (defn apply-path
   "Takes path prefix (a vector) and a set of (relative) paths and returns a new
