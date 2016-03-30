@@ -66,6 +66,12 @@ set of (absolute) paths, where the prefix has been applied.
                        (range) ; range calculates the index used for the collection in path
                        ))))
 
+(defn apply-in
+  "Apply specific rules at nested map"
+  [path rules]
+  (fn [data-parent]
+    (validate rules (get-in data-parent path) path)))
+
 (defn upon
   ([check rules1]
    (upon check rules1 []))
