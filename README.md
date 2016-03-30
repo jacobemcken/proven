@@ -1,10 +1,13 @@
 # Proven
 
-A Clojure validation library that goes beyond "just a type". As opposed to the
-validation provided by libraries like [Schema][] and [core.typed][] it validates
-an entire map as a whole. This allows for differentiating validation of one
-valued based on the value of another. Inspiration for this library came from
-[jkk/verily][verily] but this lib encourage nested data structures.
+
+
+A Clojure validation library **with emphasis on human readable error messages**
+that goes beyond "just a type". As opposed to the validation provided by
+libraries like [Schema][] and [core.typed][] it validates an entire map as a
+whole. This allows for differentiating validation of one valued based on the
+value of another. Inspiration for this library came from [jkk/verily][verily]
+but this lib encourage nested data structures.
 
 The intended use case is to validate a data structure behind a form in ie. when
 using [Om][] or something like it.
@@ -20,6 +23,8 @@ The error (message) is central in `proven` validation, and a validation error
 can reference one or multiple keys (paths) in the map that caused the validation
 error. This also means that a single key in a map can have multiple different
 errors attached to it. The examples below will show this.
+
+Proven returns human readable errors that can be shipped back to end users!
 
 [Schema]: https://github.com/Prismatic/schema
 [core.typed]: https://github.com/clojure/core.typed
