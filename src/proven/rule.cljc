@@ -30,8 +30,6 @@ Error example:
     coll
     (set coll)))
 
-;; Validation rule builder helpers
-
 (defn blank-string?
   [s]
   (and (string? s) (string/blank? s)))
@@ -44,6 +42,9 @@ if the function f returns false."
     (and (not= ::absent value)
          (not (nil? value))
          (not (f value)))))
+
+
+;; Rule builders
 
 (defn contains
   "The keys must be present in the map but may be blank."
@@ -90,10 +91,6 @@ key exists and the values isn't blank."
 (defn between-length [[lower upper] keys & [msg]]
   (make-validator keys (when-present #(<= lower (count %) upper))
                   (or msg (str "must be between " lower " and " upper " characters"))))
-
-(defn combine [& validators]
-  (fn [m]
-    (apply concat (map seqify (keep #(% m) validators)))))
 
 (defn in [coll keys & [msg]]
   (make-validator keys (when-present #(contains? (enforce-set coll) %))
