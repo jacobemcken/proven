@@ -58,7 +58,7 @@ set of (absolute) paths, where the prefix has been applied.
   ([rules data path-prefix]
    (apply concat (keep #(apply-rule path-prefix data %) rules))))
 
-(defn in-coll
+(defn for-all
   [path rules]
   (fn [data]
     (apply concat (map #(validate rules %1 (conj path %2))
