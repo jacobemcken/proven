@@ -189,6 +189,97 @@ Some examples usages of rule building:
    ])
 ```
 
+### Custom rules
+
+A Proven "rule" is a function that takes a map and returns a list of
+errors if the validation fails. Upon valid input the rule function
+will return an empty list or nil indicating that there is no errors.
+An error is specified using the record `#proven.core.Err`.
+
+
+#### Low-level
+
+How to build a rule without the `proven.rule` namespace which contains
+helper functions:
+
+```clj
+(ns example.core
+  (:require [proven.validator :refer [validate]]
+            #?(:cljs [proven.core :refer [Err]]))
+  #?(:clj (:import [proven.core Err])))
+
+(defn name-is-john
+  [m]
+  (when-not (= (:name m) "John")
+    (list (Err. #{[:name]} "must be \"John\""))))
+
+(validate [name-is-john] {:name "John"})
+
+;; Return an empty list which means there is no validation errors
+()
+
+(validate [name-is-john] {:name "James"})
+
+;; Return error list
+(#proven.core.Err{:paths #{[:name]}, :msg "must be \"John\""})
+```
+
+#### Rules on a higher level
+
+By using some of the building blocks of the Proven it is easier to
+make reusable rules. The function `make-validator` returns a Proven
+rule (a function) which is a convenience for easily applying the same
+rule to multiple keys in a map and also makes it easier to overwrite
+the error message (i.e. for translation).
+
+```clj
+(ns example.core
+  (:require [proven.rule :as rule]
+            [proven.validator :refer [validate]]))
+
+(defn equals-john
+  [ks & [msg]]
+  (rule/make-validator
+   ks
+   #(not= % "John")
+   (or msg "must be \"John\"")))
+
+(validate [(equals-john :alias "Gimme \"John\"")] {:alias "John"})
+
+;; Return an empty list which means there is no validation errors
+()
+
+(validate
+ [(equals-john [:name :alias] "Gimme \"John\"")]
+ {:name "John" :alias "James"})
+
+;; Return error list
+(#proven.core.Err{:paths #{[:alias]}, :msg "Gimme \"John\""})
+```
+
+Also sometimes you only want to apply a rule if the key in the map
+actually exists:
+
+```clj
+(ns example.core
+  (:require [proven.rule :as rule]
+            [proven.validator :refer [validate]]))
+
+(defn equals-john
+  [ks & [msg]]
+  (rule/make-validator
+   ks
+   (rule/when-present #(= % "John"))
+   (or msg "must be \"John\"")))
+
+(validate
+ [(equals-john [:name :alias])]
+ {:alias "John"})
+
+;; Notice how the omitted :name doesn't bother the validation rule
+()
+```
+
 
 ## License
 
