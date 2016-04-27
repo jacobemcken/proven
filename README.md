@@ -1,30 +1,31 @@
 # Proven
 
+A Clojure validation library **with emphasis on human readable error
+messages** that goes beyond "just a type". As opposed to the
+validation provided by libraries like [Schema][] and [core.typed][] it
+validates an entire map as a whole. This allows for differentiating
+validation of one valued based on the value of another. Inspiration
+for this library came from [jkk/verily][verily] but this lib encourage
+nested data structures.
 
-
-A Clojure validation library **with emphasis on human readable error messages**
-that goes beyond "just a type". As opposed to the validation provided by
-libraries like [Schema][] and [core.typed][] it validates an entire map as a
-whole. This allows for differentiating validation of one valued based on the
-value of another. Inspiration for this library came from [jkk/verily][verily]
-but this lib encourage nested data structures.
-
-The intended use case is to validate a data structure behind a form in i.e. when
-using [Om][] or something like it.
+The intended use case is to validate a data structure behind a form in
+i.e. when using [Om][] or something like it.
 
 Examples of not "just a type" validation:
 
   * That two email addresses in a map is the same.
   * Only validate fields if other field(s) has been filled in.
-    Assume entering a credit card is optional but when specifying the card
-    number both expiry date and control number becomes required.
+    Assume entering a credit card is optional but when specifying the
+    card number both expiry date and control number becomes required.
 
-The error (message) is central in `proven` validation, and a validation error
-can reference one or multiple keys (paths) in the map that caused the validation
-error. This also means that a single key in a map can have multiple different
-errors attached to it. The examples below will show this.
+The error (message) is central in `proven` validation, and a
+validation error can reference one or multiple keys (paths) in the map
+that caused the validation error. This also means that a single key in
+a map can have multiple different errors attached to it. The examples
+below will show this.
 
-Proven returns human readable errors that can be shipped back to end users!
+Proven returns human readable errors that can be shipped back to end
+users!
 
 [Schema]: https://github.com/Prismatic/schema
 [core.typed]: https://github.com/clojure/core.typed
@@ -42,12 +43,14 @@ Add the following dependency to your `project.clj` file:
 
 ## Usage
 
-The validation function takes a collection of rules and the hash-map to be
-validated. A rule is a function that takes a hash-map and returns an empty list
-when data within it is valid and list of validation errors when not.
+The validation function takes a collection of rules and the hash-map
+to be validated. A rule is a function that takes a hash-map and
+returns an empty list when data within it is valid and list of
+validation errors when not.
 
-The namespace `proven.rule` contains helper functions to build rules for most
-common cases. But see "Built in validations" further down for a complete list.
+The namespace `proven.rule` contains helper functions to build rules
+for most common cases. But see "Built in validations" further down for
+a complete list.
 
 
 ### The basics
@@ -78,9 +81,9 @@ A very basic example to get started:
                   :msg "must not be blank"})
 ```
 
-The list of errors is the biggest difference from [jkk/verily][verily] because
-instead of referencing keys the `Err` record references a path (in a nested
-structure).
+The list of errors is the biggest difference from [jkk/verily][verily]
+because instead of referencing keys the `Err` record references a path
+(in a nested structure).
 
 
 ### Conditionals
@@ -151,17 +154,18 @@ Now for some conditional rules:
 ()
 ```
 
-When representing a nested data structure in a graphical user interface
-i.e. a web form, the path can be used to highlight the form and/or specific form
-fields which has led to the validation error.
+When representing a nested data structure in a graphical user
+interface i.e. a web form, the path can be used to highlight the form
+and/or specific form fields which has led to the validation error.
 
 
 ### Built-in rules
 
-The built-in rules aren't rules pr. say but rather rule builders (functions that
-return the actual validation function). This fact might become more clear when
-looking at "Custom rules" below. For now just know that all `proven.rule` builders
-takes the key (or keys) and an optional error message as the last arguments.
+The built-in rules aren't rules pr. say but rather rule builders
+(functions that return the actual validation function). This fact
+might become more clear when looking at [Custom rules](#custom-rules)
+below. For now just know that all `proven.rule` builders takes the key
+(or keys) and an optional error message as the last arguments.
 
   * `required` - key(s) must be present in the map and be not blank (blank being nil or empty string)
   * `not-blank` - key(s) if is present they must be not blank
