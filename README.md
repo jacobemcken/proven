@@ -9,12 +9,12 @@ whole. This allows for differentiating validation of one valued based on the
 value of another. Inspiration for this library came from [jkk/verily][verily]
 but this lib encourage nested data structures.
 
-The intended use case is to validate a data structure behind a form in ie. when
+The intended use case is to validate a data structure behind a form in i.e. when
 using [Om][] or something like it.
 
 Examples of not "just a type" validation:
 
-  * That two email adresses in a map is the same.
+  * That two email addresses in a map is the same.
   * Only validate fields if other field(s) has been filled in.
     Assume entering a credit card is optional but when specifying the card
     number both expiry date and control number becomes required.
@@ -152,7 +152,7 @@ Now for some conditional rules:
 ```
 
 When representing a nested data structure in a graphical user interface
-ie. a web form, the path can be used to highlight the form and/or specific form
+i.e. a web form, the path can be used to highlight the form and/or specific form
 fields which has led to the validation error.
 
 
@@ -160,7 +160,7 @@ fields which has led to the validation error.
 
 The built-in rules aren't rules pr. say but rather rule builders (functions that
 return the actual validation function). This fact might become more clear when
-looking at "Custom rules" below. For now just know that all `proven.rule` buildes
+looking at "Custom rules" below. For now just know that all `proven.rule` builders
 takes the key (or keys) and an optional error message as the last arguments.
 
   * `required` - key(s) must be present in the map and be not blank (blank being nil or empty string)
